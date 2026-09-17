@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                              %%
+%%         Capítulo 1 - Introdução              %%
+%%                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introdução}
+\label{cap:introducao}
+
+\section{Contextualização}
+
+A transição de sistemas monolíticos para arquiteturas de microsserviços --- processo denominado \textit{microservitização} --- tem sido amplamente impulsionada pela necessidade de alinhar decisões técnicas de design com a criação de valor de negócio \cite{hassan2020microservice}. Ao isolar capacidades funcionais em serviços autônomos e desacoplados, busca-se aumentar a escalabilidade, a facilidade de manutenção e a manutenibilidade dos sistemas distribuídos em nuvem \cite{verarivera2021granularity}.
+
+No entanto, definir o tamanho e a dimensão ideal de cada serviço (o problema de granularidade) permanece como um dos maiores desafios em engenharia de software \cite{hassan2020microservice, verarivera2021granularity}. A decomposição excessiva (serviços muito pequenos ou \textit{nanoserviços}) pode introduzir complexidade operacional desnecessária e sobrecarga (\textit{overhead}) de rede, enquanto serviços demasiadamente agregados anulam os benefícios de isolamento e escalabilidade independente \cite{mendonca2024serviceweaver}.
+
+\section{Formulação do Problema}
+
+Os métodos tradicionais de avaliação econômica e de atributos de qualidade em arquitetura de software, como o \textit{Cost Benefit Analysis Method} (CBAM) \cite{asundi2001cbam}, foram projetados para serem aplicados de forma estática, predominantemente na fase de design. Contudo, a granularidade ideal de um microsserviço não é uma propriedade fixa, pois depende diretamente das condições operacionais do sistema (como perfis de tráfego, variação de latência e consumo de recursos) \cite{hassan2020microservice, hassan2017ambients}.
+
+Nesse contexto, há carência de evidências empíricas que quantifiquem, para cenários de carga específicos, o equilíbrio entre duas dimensões cruciais na escolha da granularidade \cite{hassan2020microservice}:
+\begin{enumerate}
+    \item \textbf{O valor agregado (benefício):} ganhos de escalabilidade e atendimento aos acordos de nível de serviço (SLAs) obtidos ao desacoplar componentes.
+    \item \textbf{O custo incorrido:} impactos técnicos e financeiros decorrentes da sobrecarga de comunicação entre processos e máquinas virtuais.
+\end{enumerate}
+
+O surgimento recente de arcabouços como o \textit{Service Weaver} \cite{ghemawat2023serviceweaver} oferece uma oportunidade única para tratar esse problema. Ao permitir que a aplicação seja desenvolvida como um monólito modular e compilada em um único binário, o \textit{Service Weaver} possibilita alterar a granularidade física de implantação (co-localizando ou desacoplando componentes via arquivo de configuração TOML) sem alterações no código-fonte de negócio \cite{mendonca2024serviceweaver}. Isso viabiliza um estudo experimental comparativo: implantar uma mesma aplicação em diferentes granularidades e medir, sob carga controlada, os custos e benefícios de cada configuração.
+
+\section{Objetivos}
+
+\subsection{Objetivo Geral}
+
+Avaliar empiricamente a relação custo-benefício de diferentes granularidades de implantação de microsserviços, utilizando o arcabouço \textit{Service Weaver} e a aplicação \textit{Online Boutique} sob cenários específicos de carga, de modo a identificar a configuração que oferece o melhor equilíbrio entre escalabilidade e custo.
+
+\subsection{Objetivos Específicos}
+
+\begin{itemize}
+    \item Definir um conjunto de cenários de granularidade (topologias de implantação) para a aplicação \textit{Online Boutique}, variando a co-localização e o desacoplamento de componentes por meio da configuração TOML do \textit{Service Weaver}, tomando o CBAM como referencial de análise custo-benefício.
+    \item Executar experimentos controlados com o gerador de carga \textit{Locust}, simulando perfis de carga específicos (usuários concorrentes e picos súbitos de acesso) sobre cada cenário definido.
+    \item Analisar comparativamente as métricas coletadas (latência média e p95, vazão e número de chamadas remotas) para identificar a granularidade com melhor equilíbrio custo-benefício em cada perfil de carga.
+\end{itemize}

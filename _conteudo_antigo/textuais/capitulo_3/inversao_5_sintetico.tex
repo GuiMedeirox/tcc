@@ -1,0 +1,80 @@
+\section{Inversão de dados sintéticos em cinco camadas (Modelo 2)}
+\label{sec:inversao_5_sintetico}
+O desempenho do \ac{aog} é também investigado em uma \ac{sev} de cinco camadas. Os espaços de busca (valores máximo e mínimo) dos parâmetros do modelo são mostrados na tabela \ref{tab:tab_sint_5}.
+
+
+\begin{table}[H]
+    \centering
+    \caption{Parâmetros para modelo de cinco camadas.}
+    \begin{tabular}{@{}ccccc@{}}
+        \toprule
+        \textbf{Parâmetros}  & \textbf{Valores Verdadeiros} & \textbf{Mínimo}      & \textbf{Máximo}      \\ \midrule
+        $\rho_1(\Omega$m)    & 10                           & 1                    & 20                   \\
+        $\rho_2(\Omega$m)    & 50                           & 30                   & 60                   \\
+        $\rho_3(\Omega$m)    & 100                          & 50                   & 150                  \\
+        $\rho_4(\Omega$m)    & 20                           & 10 0                 & 40                   \\
+        $\rho_5(\Omega$m)    & 400                          & 200                  & 600                  \\
+        $E_1($m)             & 2                            & 0.5                  & 5                    \\
+        $E_2($m)             & 15                           & 10                   & 20                   \\
+        $E_3($m)             & 20                           & 10                   & 30                   \\
+        $E_4($m)             & 25                           & 10                   & 50                   \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} \\ \bottomrule
+    \end{tabular}
+    \label{tab:tab_sint_5}
+\end{table}
+
+ A solução média e desvio padrão das 10 inversões entre o modelo verdadeiro e o modelos estimado da inversão em cinco camadas com ruído estão descritos na Tabela \ref{tab:tab_media_5}.
+
+\begin{table}[H]
+    \center
+    \caption{Média e desvio padrão de 10 inversões.}
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \textbf{Parâmetros}  & \textbf{Valor Médio} & \textbf{Desvio Padrão} \\ \midrule
+        $\rho_1(\Omega$m)    & 11.93                & 4.10                   \\
+        $\rho_2(\Omega$m)    & 55.76                & 7.62                   \\
+        $\rho_3(\Omega$m)    & 12.11                & 32.39                  \\
+        $\rho_4(\Omega$m)    & 19.10                & 6.01                   \\
+        $\rho_5(\Omega$m)    & 362.05               & 4.38                   \\
+        $E_1($m)             & 3.08                 & 1.44                   \\
+        $E_2($m)             & 14.74                & 4.00                   \\
+        $E_3($m)             & 16.81                & 7.57                   \\
+        $E_4($m)             & 23.58                & 8.58                   \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{}   \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:tab_media_5}
+\end{table}
+
+
+ Com 100 gafanhotos em 1000 iterações nota-se que a \ac{aog} recuperou bem a parâmetros da inversão do modelo verdadeiro (linha azul sólida)  em comparação como modelo estimado (linhas tracejada vermelha) (Figura \ref{fig:mod_2_modelo_figure}).
+ 
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig1_mod2.eps}
+    \caption{Resultados da inversão do modelo sintético de 5 camadas usando AOG, comparação entre dados da resistividade aparente observada (círculos vermelhos) e resistividade aparente calculada teoricamente (linha sólida azul) para o melhor ajuste do modelo AOG.}
+    % \source{O Autor}
+    \label{fig:mod_2_figure}
+\end{figure}
+
+
+Na figura \ref{fig:mod_2_modelo_figure} mostra o modelo de camadas obtidos com a inversão utilizando o \ac{aog}. A três camadas apresentam uma  resolução mediana, embora o modelo invertido superestime a resistividade dessa camada, é aceitável.
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig2_mod2.eps}
+    \caption{Modelo de camadas}
+
+    \label{fig:mod_2_modelo_figure}
+\end{figure}
+
+A Figura \ref{fig:mod_2_modelo_convergence} representa uma curva típica de uma inversão, percebe-se que a curva converge bem para a solução da inversão.
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig3_mod2.eps}
+    \caption{Curva típica de convergência do modelo sintético de 5 camadas usando o AOG de uma inversão.}
+    \label{fig:mod_2_modelo_convergence}
+\end{figure}

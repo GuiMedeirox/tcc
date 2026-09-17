@@ -1,0 +1,73 @@
+\section{Inversão de dados reais em três camadas (Modelo 3)}
+\label{sec:inversao_3_real}
+
+
+O  \ac{aog}, na inversão em dados reais, foi também investigado nesse trabalho. A Figura \ref{fig:mod_3_figure} ilustra o resultado de inversão do \ac{aog} em uma curva de resistividade do modelo 3 em comparação com o resultado do \ac{aog}. Os espaços de busca (valores máximo e mínimo) dos parâmetros do modelo são mostrados na Tabela \ref{tab:tab_real_3}.
+
+\begin{table}[H]
+    \centering
+    \caption{Parâmetros para modelo real de três camadas.}
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \textbf{Parâmetros}   & \textbf{Mínimo}      & \textbf{Máximo}      \\ \midrule
+        $\rho_1(\Omega$m)                             & 10                    & 100                   \\
+        $\rho_2(\Omega$m)                               & 1                  & 10                  \\
+        $\rho_3(\Omega$m)                              & 5                    & 20                   \\
+        $E_1($m)                                         & 1                    & 5                   \\
+        $E_2($m)                                        & 10                  & 25                 \\
+        \multicolumn{1}{l}{}         & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} \\ \bottomrule
+    \end{tabular}
+    \label{tab:tab_real_3}
+\end{table}
+
+
+
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig1_mod3.eps}
+    \caption{ Resultados da inversão do modelo real de 3 camadas usando o AOG, comparação entre dados da resistividade aparente observada (círculos vermelhos) e resistividade aparente calculada teoricamente (linha sólida azul) para o melhor ajuste do modelo AOG.}
+    \label{fig:mod_3_figure}
+\end{figure}
+
+
+Nota-se que a \ac{aog} recuperou muito bem a parâmetros da inversão do modelo verdadeiro (linha azul sólida)  em comparação como modelo estimado (linhas tracejada vermelha) (Figura \ref{fig:mod_3_modelo_figure}). A solução média das 10 inversões entre o modelo verdadeiro e o modelos estimado da inversão em três camadas estão descritos na Tabela \ref{tab:tab_media_3_real}. Com 150 gafanhotos em 1000 iterações o \ac{aog} se ajusta aos dados de resistividade aparente.
+
+
+
+\begin{table}[H]
+    \center
+   \caption{Média e desvio padrão de 10 inversões.}
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \textbf{Parâmetros}  & \textbf{Valor Médio} & \textbf{Desvio Padrão} \\ \midrule
+        $\rho_1(\Omega$m)    & 32.82                & 0.82                   \\
+        $\rho_2(\Omega$m)    & 2.67               & 1.01                  \\
+        $\rho_3(\Omega$m)    & 14.00                 & 1.23                   \\
+        $E_1($m)             & 3.83                & 0.30                   \\
+        $E_2($m)             & 19.74               & 5.48                  \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{}   \\
+        \bottomrule
+    \end{tabular} 
+  
+    \label{tab:tab_media_3_real}
+\end{table}
+
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig2_mod3.eps}
+    \caption{Modelo verdadeiro (linha sólida azul) e modelo médio estimado para o AOG (linha tracejada vermelha).}
+
+    \label{fig:mod_3_modelo_figure}
+\end{figure}
+
+A Figura \ref{fig:mod_3_modelo_convergence} representa uma curva típica de uma inversão. A curva convergiu bem para a solução da inversão.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig3_mod3.eps}
+    \caption{Curva típica de convergência do modelo real de 3 camadas usando o AOG de uma inversão.}
+    \label{fig:mod_3_modelo_convergence}
+\end{figure}

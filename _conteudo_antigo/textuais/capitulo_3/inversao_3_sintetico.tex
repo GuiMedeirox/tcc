@@ -1,0 +1,75 @@
+
+% Dados sintéticos foram gerados para o modelo usando o código de modelagem direta e pontos dados por círculos mostrados na figura (ref). Para o \ac{aog}, usamos limites de pesquisa ub e lb na Tabela(ref).
+\section{Inversão de dados sintéticos em três camadas (Modelo 1)}
+\label{sec:inversao_sinteticos}
+
+O desempenho do \ac{aog} na inversão em uma \ac{sev} é primeiramente investigado em dados sintéticos gerados a partir de um modelo de três camadas. Na tabela \ref{tab:tab_sint_3} contém os valores verdadeiros e espaço de busca utilizado na inversão. $\rho_i$ e $E_i$ correspondem, respectivamente, aos valores de resistividade e espessura da camada $i$. A última camada tem espessura infinita. O valor mínimo e o valor máximo correspondem aos limites do espaço de busca.
+
+\begin{table}[H]
+    \centering
+    \caption{Parâmetros para modelo de três camadas.}
+    \begin{tabular}{@{}ccccc@{}}
+        \toprule
+        \textbf{Parâmetros}  & \textbf{Valores Verdadeiros} & \textbf{Mínimo}      & \textbf{Máximo}      \\ \midrule
+        $\rho_1(\Omega$m)    & 10                           & 5                    & 15                   \\
+        $\rho_2(\Omega$m)    & 390                          & 15                   & 500                  \\
+        $\rho_3(\Omega$m)    & 10                           & 1                    & 20                   \\
+        $E_1($m)             & 10                           & 1                    & 20                   \\
+        $E_2($m)             & 250                          & 100                  & 500                  \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} \\ \bottomrule
+    \end{tabular}
+    \label{tab:tab_sint_3}
+\end{table}
+
+
+A solução média e desvio padrão das 10 inversões entre o modelo verdadeiro e o modelo estimado em três camadas com ruído estão descritos na tabela \ref{tab:tab_media_3}.
+
+
+
+\begin{table}[H]
+    \center
+   \caption{Média e desvio padrão de 10 inversões.}
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \textbf{Parâmetros}  & \textbf{Valor Médio} & \textbf{Desvio Padrão} \\ \midrule
+        $\rho_1(\Omega$m)    & 10.07                & 1.10                   \\
+        $\rho_2(\Omega$m)    & 371.41               & 12.12                  \\
+        $\rho_3(\Omega$m)    & 9.10                 & 6.0                    \\
+        $E_1($m)             & 10.01                & 1.13                   \\
+        $E_2($m)             & 263.39               & 18.18                  \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{}   \\
+        \bottomrule
+    \end{tabular} 
+    
+    \label{tab:tab_media_3}
+\end{table}
+
+A figura \ref{fig:mod_1_figure} mostra a curva de resistividade média com 100 ganhotos e 1000 interações. Nota-se que o \ac{aog} recuperou muito entre dados da resistividade aparente observada (círculos vermelhos) e resistividade aparente calculada teoricamente (linha sólida azul).
+
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig1_mod1.eps}
+    \caption{ Resultados da inversão do modelo sintético de 3 camadas usando AOG, comparação entre dados da resistividade aparente observada (círculos vermelhos) e resistividade aparente calculada teoricamente (linha sólida azul) para o melhor ajuste do modelo AOG.}
+    \label{fig:mod_1_figure}
+\end{figure}
+
+Na figura \ref{fig:mod_1_modelo_figure} mostra o modelo de camadas obtidos com a inversão utilizando o \ac{aog}. A Camada um é bem resolvida. A segunda e terceira camada também apresenta boa resolução, embora o modelo invertido superestime a resistividade dessa camada.
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig2_mod1.eps}
+    \caption{Modelo verdadeiro (linha sólida azul) e modelo médio estimado para o AOG (linha tracejada vermelha).}
+
+    \label{fig:mod_1_modelo_figure}
+\end{figure}
+
+A Figura \ref{fig:mod_1_modelo_convergence} representa uma curva típica de uma inversão, percebe-se que a curva converge bem para a solução da inversão.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{lib/fig/result/fig3_mod1.eps}
+    \caption{Curva típica de convergência do modelo sintético de 3 camadas usando o AOG de uma inversão.}
+    \label{fig:mod_1_modelo_convergence}
+\end{figure}

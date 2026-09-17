@@ -1,0 +1,172 @@
+\section{Algoritmo de otimização do gafanhoto}
+\label{subsec:algoritmo-do-gafanhoto}
+Proposto por \citeonline{Saremi2017}, o \acf{aog} ou \ac{goa} é um algoritmo que simula o comportamento do gafanhoto em enxame na busca por comida na natureza. Os gafanhotos são insetos conhecidos como uma das pragas mais perigosas que dizimam plantações e prejudicam a agricultura em algumas regiões do mundo. Seu ciclo de vida inclui duas fases: a fase de ninfa (figura \ref{fig:ninfa}) é caracterizada pelos seus movimentos lentos e pequenos passos (explotação), já na fase adulta (figura \ref{fig:adulto}), seus movimentos são bruscos e de longo alcance (exploração). Esses movimentos constituem a base para o algoritmo para o \ac{aog}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gafanhoto/ninfa.jpg}
+  \caption{Gafanhotos na fase de ninfa}
+  \source{\cite{noauthor_desert_2016}}
+  \label{fig:ninfa}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gafanhoto/adulto.png}
+  % Contém Fonte: 
+  \caption{Gafanhotos na fase adulta}
+  \source{\cite{kaufman_why_2020}}
+  \label{fig:adulto}
+\end{figure}
+
+A equação \ref{eq:pi} simula o comportamento de enxame dos gafanhotos:
+
+\begin{equation}
+  \label{eq:pi}
+  P_i = S_i + G_i + A_i
+\end{equation}
+onde $P_i$ indica a posição do i-ésimo gafanhoto, $S_i$ representa a interação social entre a solução e os outros gafanhotos, $G_i$ é a força da gravidade sobre o i-ésimo gafanhoto e $A_i$ representa a direção do vento.
+Para produzir um comportamento aleatório dos gafanhotos, a equação \ref{eq:pi} pode ser escrita como:
+
+\begin{equation}
+    \label{eq:pi_r}
+    P_i = r_1 S_i + r_2 G_i + r_3 A_i
+  \end{equation}
+  onde $r_1$, $r_2 $ e $r_3$ são números aleatórios entre $[0,1]$.
+
+\subsection{Interação Social}
+\label{subsubsec:interacao_social}
+
+  A interação social entre os gafanhotos $S_i$ é definida como:
+  \begin{equation}
+    \label{eq:si}
+    S_i = \sum_{\substack{j=1 \\i \neq j }}^{N} ~s(d_{ij})~ \widehat{d_{ij}}
+  \end{equation}
+
+    \begin{equation}
+    \label{eq:sr}
+    s = f~ exp^{-r/l} - exp^{-r}
+  \end{equation}
+  
+  
+  
+  % \begin{equation}
+  %   \label{eq:dij}
+  %   d_{ij} = | P_j - P_i |
+  % \end{equation}
+  
+  
+  % \begin{equation}
+  %   \label{eq:dijv}
+  %   \widehat{d_{ij}} =\frac{P_j-P_i}{d_{ij}}
+  % \end{equation}
+  
+
+  
+  Onde $N$ na equação \ref{eq:si} refere-se ao número de gafanhotos, onde $ d_{ij} = | P_j - P_i |$ representa a distância entre o i-ésimo e o j-ésimo gafanhoto, $\widehat{d_{ij}} =\frac{P_j-P_i}{d_{ij}}$ representa o vetor unitário.
+  
+A equação \ref{eq:sr} representa a força de repulsão e atração entre gafanhotos, onde $l$ é a escala de comprimento atrativo e $f$ é a intensidade da atração. Quando a distância entre dois gafanhotos  é entre [0, 2.079] ocorre repulsão, e quando a distância entre dois gafanhotos é exatamente 2.079, não há nem repulsão, nem atração (sem força), esta área é chamada de zona de conforto. Quando a distância excede 2.079, a força de atração aumenta, depois diminui progressivamente até atingir 4. O valor da função $s$ é próximo de zero e a distância é maior que 10. Portanto, não podemos usar esta função para forças fortes entre gafanhotos com grandes distâncias entre eles.
+
+A figura abaixo mostra a interação entre gafanhotos em relação à zona de conforto.
+  
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{lib/fig/gafanhoto/atracao_repul.png}
+    % Contém Fonte: 
+    \caption{interação entre os gafanhotos. Gafanhotos de cor vermelha estão sendo atraídos para a zona de conforto [0,2079], gafanhotos de cor verde estão na zona de conforto [2.079] e gafanhotos de cor azul estão em repulsão para a zona de conforto [2.079,4].}
+    \source{O Autor}
+    \label{fig:atra_repu}
+  \end{figure}
+  
+
+\subsection{Força da Gravidade}
+\label{subsubsec:forca_gravidade}
+
+A força da gravidade $G_i$ é dada pela equação:
+
+\begin{equation}
+  \label{eq:gi}
+  G_i = -g \hat{e}_g
+\end{equation}
+onde $g$ representa a constante gravitacional e $\hat{e}_g $ representa um vetor unitário em direção ao centro da Terra.
+
+
+\subsection{Direção do Vento}
+\label{subsubsec:direcao_vento}
+
+A direção do vento $A_i$ é dada pela equação:
+
+\begin{equation}
+  \label{eq:ai}
+  A_i = u \hat{e}_w
+\end{equation}
+onde $u$ representa uma constante de deriva e $\hat{e}_w$ é um vetor unitário na direção do vento.
+\subsection{Posição do Gafanhoto}
+\label{subsubsec:posicao_gafanhoto}
+
+
+Quando substituímos os valores na equação \ref{eq:si}, temos:
+
+\begin{equation}
+  {P_i} = \sum_{\substack{j=1 j \neq i}}^{N} s~(d_{ij})\widehat{d_{ij}} - g\hat{e}_g + u\hat{e}_w = \sum_{\substack{j=1 j \neq i}}^{N} s~(|P_j-P_i|) \frac{P_j-P_i}{d_{ij}}- g\hat{e}_g + u\hat{e}_w
+  \label{eq:pi_mod}
+\end{equation}
+
+No entanto, \citeonline{Saremi2017} mostram que a equação \ref{eq:pi_mod} não pode ser usada diretamente para resolver problemas de otimização, pois os gafanhotos chegam rapidamente à zona de conforto e o sistema de enxame não converge para sua solução (ótimo global). Então a equação é alterada para:
+
+\begin{equation}
+  \label{eq:pid}
+  P_i^d = ~c\left (\sum_{\substack{j=1 \\j \neq i}}^{N} ~c~\frac{ub_d-lb_d}{2} s\big (|P_j^d-P_i^d| \big ) \frac{P_j-P_i}{d_{ij}}\right ) + \widehat{T}_d
+\end{equation}
+onde $ub_d$ e $lb_d$ representam os limites superior e inferior na d-ésima dimensão, respectivamente. $\hat{T}_d$ é a melhor solução encontrada até o momento no espaço de dimensão $d$ e $G_i = 0$.
+
+O parâmetro $c_1$ é usado para reduzir os movimentos dos gafanhotos em torno da solução, proporcionando um bom equilíbrio entre intensificação e diversificação. O parâmetro $c_2$ é usado para reduzir a zona de repulsão, zona de atração e zona de conforto entre gafanhotos proporcionalmente ao número de iterações. Para equilibrar as fases de exploração e explotação usando a abordagem do gafanhoto, o coeficiente $c$ diminui conforme o número de iterações.
+
+\begin{equation}
+  \label{eq:c}
+  c = c_{max} - iter~\frac{c_{max} - c_{min}}{Max_{iter}}
+\end{equation}
+onde $c_{max}$ e $c_{min}$ representam o máximo e o mínimo valores de $c$, respectivamente, $t$ é a iteração atual e $Max_{iter}$ é o número máximo de iterações.
+
+\subsection{Pseudocódigo e Complexidade}
+\label{subsubsec:pseudocodigo_comlexidade}
+
+O pseudocódigo do \ac{aog} é mostrado no algoritmo \ref{alg:paog} e o código-fonte, em várias linguagens de programação, pode ser encontrado na página \href{https://seyedalimirjalili.com/goa}{https://seyedalimirjalili.com\\/goa}.
+
+\begin{algorithm}[H]
+  \caption{Pseudocódigo do Algoritmo de
+    Otimização do Gafanhoto (AOG)}
+  \label{alg:paog}
+  \SetAlgoLined
+  \begin{algorithmic}[1]
+    \STATE Gere a população inicial de Gafanhotos aleatoriamente $P_i(i=1,2,...,n)$
+    \STATE Inicialize $c_{min}$, $c_{max}$ e número máximo de iterações $Max_{iter}$
+    \STATE Avalie o fitness $F(P_i)$ de cada gafanhoto $P_i$
+    \STATE T = a melhor solução
+    \WHILE{$(iter<Max_{iter})$}
+    \STATE Atualize $c_1$ e $c_2 $ usando a equação \ref{eq:c}
+    \FOR{$i=1$ até $N$ (todos N gafanhotos na população)}
+    \STATE Normalize a distância entre gafanhotos no intervalo [1,4]
+    \STATE Atualize a posição do gafanhoto atual usando a equação \ref{eq:pid}
+    \STATE Traga o gafanhoto atual de volta se ele for fora dos limites
+    \ENDFOR
+    \STATE Atualize T se houver uma solução melhor
+    \STATE $iter = iter + 1$
+    \ENDWHILE
+    \STATE \Return{a melhor solução T}
+  \end{algorithmic}
+\end{algorithm}
+
+O \ac{aog} começa gerando a população de gafanhotos e inicializando $c_{min}$, $c_{max}$, e número máximo de interações ($Max_{iter}$). Em seguida, avalia-se cada solução calculando seu valor usando a função \textit{fitness}. Após avaliar cada solução na população, atribuí-se a melhor solução de acordo com seu valor.
+Depois, atualiza-se o parâmetro do coeficiente para encolher as zonas de atração, repulsão e conforto (Equação  \ref{eq:c}).
+
+A função $s$ da Equação \ref{eq:sr}, divide o espaço de busca em zonas de
+repulsão, conforto e atração. Quando essa função falha em aplicar as forças entre os gafanhotos, mapeia-se a distância no intervalo {[1,4]}. 
+
+Em seguida, atualiza-se cada solução na população com base na distância entre o gafanhoto (a solução) e o outro gafanhoto (a outra solução). Também atualiza-se a melhor solução na população e o parâmetro do coeficiente decrescente usando a Equação \ref{eq:pid}.
+
+No caso de um gafanhoto violar os limites após atualiza-se a solução, traz o gafanhoto de volta ao seu domínio. Em seguida, repete-se os três passos anteriores para cada solução na população.
+
+Depois, atualiza e avalia cada solução para atribuir a melhor na população. Repete as operações gerais até atingir o número máximo de iterações para retornar a melhor solução global.
+
+A complexidade de tempo do \ac{aog} está diretamente relacionada ao número de agentes($n$) e número de interações($n \times Max_{iter}$). Assim, $O(n \times Max_{iter})$ representa a complexidade de tempo desse algoritmo. \cite{GOA_web}

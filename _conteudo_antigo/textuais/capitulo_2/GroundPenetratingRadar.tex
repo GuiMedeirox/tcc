@@ -1,0 +1,250 @@
+\section{Ground Penetrating Radar (GPR)}
+\label{subsec:groud_penetrating_radar}
+
+O método aqui descrito é fundamentado no envio de um pulso eletromagnético por meio de uma antena transmissora. Esse pulso tem uma duração extremamente curta de apenas alguns nanosegundos ($10^{-9}$ segundos) empregando ondas eletromagnéticas de frequências VHF/UHF (conforme ilustrado na figura \ref{fig:fig02}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig01.png}
+  % Contém Fonte: 
+  \caption{O espectro eletromagnético delineia as gamas de frequência utilizadas por várias tecnologias. O GPR opera dentro da faixa de frequência de 10 MHz a 1 GHz, correspondendo a comprimentos de onda que variam de aproximadamente 30 metros a 0.3 metros.}
+\source{\cite{xavier2006processamento}}
+  \label{fig:fig01}
+\end{figure}
+
+Assim como os métodos sísmicos, o método \ac*{gpr} opera com o registro do tempo que leva para um pulso eletromagnético viajar. Esse pulso é emitido a partir da fonte transmissora (TX), penetra no subsolo e encontra estruturas com contrastes de impedância eletromagnética suficientes para causar reflexões. Em seguida, o pulso retorna ao receptor (RX). A figura 2.2 ilustra o funcionamento do equipamento em um cenário com duas camadas de constantes dielétricas, K1 e K2. A figura também mostra o traço que representa a onda direta pelo ar (Aw), a onda direta através da terra (Gw) e o registro do tempo de viagem duplo até a interface.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig02.png}
+  % Contém Fonte: 
+  \caption{(A) Princípio de funcionamento do método \ac*{gpr} considerando um ambiente
+composto por duas camadas. (B) Traço contendo os registros dos tempos de chegada da
+onda direta pelo ar (Aw), on da direta pela terra (Gw) e da onda refletida na interface
+formada pelas camadas 1 e 2.}
+\source{\cite{oliveira2001dois}}
+  \label{fig:fig02}
+\end{figure}
+
+Quando esse pulso atinge diferentes meios (ou alvos) com distintas propriedades eletromagnéticas, a velocidade de propagação é alterada. Como resultado, parte da energia eletromagnética é refletida e captada por uma antena receptora, enquanto outra parte sofre difração e continua se propagando até encontrar outra superfície de contraste ou ser completamente atenuada pelo meio.
+
+O "tempo duplo" é calculado, transmitido, registrado e armazenado por uma unidade de controle. Esse tempo duplo refere-se ao intervalo decorrido entre a emissão do pulso eletromagnético pela antena transmissora até o momento em que seu retorno é registrado pela antena receptora, após atingir o alvo e retornar à superfície. Além disso, a unidade de controle também registra a intensidade correspondente do sinal refletido.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig03.png}
+  % Contém Fonte: 
+  \caption{Esquema de utilização do GPR com transmissão e recebimento de sinais.}
+\source{\cite{sampaio2021investigaccao}}
+  \label{fig:fig03}
+\end{figure}
+
+Dessa forma, é possível obter imagens que revelam informações sobre as condições geomecânicas do terreno ou superfície em estudo, como a densidade de fraturas existentes e seu grau de fraturamento. Além disso, é capaz de determinar o topo do maciço rochoso e identificar descontinuidades, espessura do pacote de sedimentos, textura e nível d'água \cite{davis1989ground}.
+Na figura \ref{fig:fig03} mostra o funcionamento do \ac*{gpr}. \cite{annan1992ground}
+
+A validação dos resultados obtidos com o radar evidencia o poder e utilidade desse método como uma ferramenta auxiliar na interpolação e extrapolação das informações obtidas por meio de métodos de perfuração convencionais. \cite{davis1989ground}
+
+\subsection{Janela de GPR}
+\label{subsubsec:janela_gpr}
+
+A faixa de operação do \ac*{gpr} consiste em um intervalo de frequência no qual a atenuação experimentada pelo sinal de radar permanece constante para todos os materiais presentes no substrato geológico em consideração. É precisamente dentro dessa faixa que o fenômeno de propagação do pulso eletromagnético é governado pela equação de onda. A frequência associada ao limite inferior dessa faixa deve ser suficientemente alta para evitar a difusão da onda. Por outro lado, o limite superior não pode exceder 1 GHz, uma vez que isso levaria ao fenômeno de polarização das moléculas de água presentes nas rochas, resultando em uma significativa atenuação do sinal \cite{annan1992ground}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig04.png}
+  % Contém Fonte: 
+  \caption{A relação entre a velocidade e a frequência em diferentes condutividades.}
+\source{\cite{annan1992ground}}
+  \label{fig:fig04}
+\end{figure}
+
+As velocidades dos sinais de radar em materiais geológicos de baixa perda, adequados para sondagens por radar, estão relacionadas com a parte real da constante dielétrica pela fórmula:
+\[V = \frac{c}{(K')^{1/2}}\],
+onde \(c = 3 \times 10^8 \, \text{m/s}\), a velocidade de propagação de ondas eletromagnéticas no vácuo.
+
+\begin{table}[H]
+    \centering
+    \caption{Constante dielétrica típica, condutividade elétrica, velocidade
+e atenuação observadas em materiais geológicos comuns a 100
+MHz.}
+
+    \begin{tabular}{@{}ccccc@{}}
+        \toprule
+        \textbf{Material}  & \textbf{Constante
+Dielétrica} & \textbf{Condutividade} & \textbf{Velocidade
+}      & \textbf{Atenuação}      \\
+        \textbf{}  & \textbf{K} & \textbf{$\sigma$(mS/m)} & \textbf{$\nu$(m/ns)
+}      & \textbf{$\alpha$(dB/m)}      \\ \midrule
+        Ar & 1 & 0 & 0.3 & 0 \\
+        Água destilada & 80 & 0.01 & 0.033 & 2 x $10^{-3}$ \\
+        Água fresca & 80 & 0.5 & 0.033 & 0.1 \\
+        Água do mar & 80 & 3 x $10^{4}$ & 0.01 & 103 \\
+        Areia fresca & 3-5 & 0.01 & 0.15 & 0.01 \\
+        Areia saturada & 20-30 & 0.1-1 & 0.06 & 0.03-0.3 \\
+        Calcário & 4-8 & 0.5-2 & 0.12 & 0.4-1 \\
+        Folhelho & 5-15 & 1-100 & 0.09 & 1-100 \\
+        Siltito & 5-30 & 1-100 & 0.07 & 1-100 \\
+        Argila & 5-40 & 2-1000 & 0.06 & 1-300 \\
+        Granito & 4-6 & 0.01-1 & 0.13 & 0.01-1 \\
+        Sal & 5-6 & 0.01-1 & 0.13 & 0.01-1 \\
+        Gelo & 3-4 & 0.01 & 0.16 & 0.01 \\
+        \multicolumn{1}{l}{} & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} \\ \bottomrule
+    \end{tabular}
+    \source{\cite{daniels2004ground}}
+    \label{tab:tab1}
+\end{table}
+
+\subsection{GPRPy}
+\label{subsubsec:gprpy}
+
+Muitas vezes, as investigações envolvendo \ac{gpr} não exigem um processamento avançado para obter resultados úteis. No entanto, a maioria dos estudos de pesquisa em \ac{gpr} utiliza software proprietário fechado fornecido pelos fabricantes de sistemas \ac{gpr} ou pacotes independentes \citeonline{jol2008ground}. Essa dependência em software proprietário apresenta várias desvantagens significativas. Em primeiro lugar, o software oferece pouca flexibilidade, impedindo os usuários de adaptá-lo completamente às suas necessidades específicas. Em segundo lugar, a capacidade de reproduzir pesquisas é limitada, pois para replicar os passos de processamento mencionados em um artigo, os pesquisadores precisam ter acesso ao mesmo software proprietário. Essa limitação se torna mais crítica à medida que editores e agências de financiamento pressionam por pesquisas transparentes. Em terceiro lugar, a disponibilidade de cursos que ensinam o processamento de \ac{gpr} também é prejudicada devido à dependência do software proprietário.
+
+O pacote de software \ac{gprpy} consiste em dois interfaces gráficas de usuário (GUIs): uma para o processamento de dados de perfil figura \ref{fig:fig07} e outra para dados de ponto médio comum (CMP) ou reflexão e refração de amplo ângulo (WARR) figura \ref{fig:fig07}. O pacote também inclui uma série de funções para processamento mais avançado, como a geração de cubos de dados 3D por interpolação de perfis, interpolação de superfícies entre pontos selecionados e fusão de perfis. O código de computador da GUI é separado do código de computador que implementa o processamento e a visualização de dados. Essa separação permite que os usuários escrevam código Python que acesse diretamente todas as capacidades do \ac{gprpy} sem precisar usar a GUI. O \ac{gprpy} aproveita essa separação por meio de seus scripts gerados automaticamente.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig07.png}
+  % Contém Fonte: 
+  \caption{Interface Gráfica do Usuário (GUI) para o processamento de dados de perfil de ponto médio comum (CMP) no \ac{gpr}.}
+\source{\cite{plattner2020gprpy}}
+  \label{fig:fig07}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig08.png}
+  % Contém Fonte: 
+  \caption{Interface Gráfica do Usuário (GUI) para a análise de velocidade a partir de dados CMP ou WARR, com representações de empilhamento de amplitudes para padrões de tempo de chegada em forma de hipérbole (a) e em forma linear (b), bem como os próprios dados CMP ou WARR (c).}
+\source{\cite{plattner2020gprpy}}
+  \label{fig:fig08}
+\end{figure}
+
+\section{ANÁLISE E INTERPRETAÇÃO DE DADOS}
+\label{subsubsec:analiseeinterpretação}
+
+O processamento de dados do \ac*{gpr} pode seguir dois caminhos principais. O primeiro envolve a apresentação dos dados em forma de seções, planos ou volumes para indicar a localização de alvos anômalos, comum a todos os métodos geofísicos. O segundo caminho consiste em extrair variáveis das propriedades das ondas, como velocidade, atenuação ou impedância, e convertê-las em informações específicas para a aplicação em questão.
+
+O processo típico de processamento de dados do \ac*{gpr} inclui etapas de edição de dados, processamento básico, processamento avançado e visualização/interpretação. O processamento é uma atividade iterativa, e os dados podem passar várias vezes por esse ciclo. Em grandes conjuntos de dados, pode ser aplicado um processamento em lote com controle interativo limitado, após testes iniciais em amostras selecionadas.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig05.png}
+  % Contém Fonte: 
+  \caption{Visão geral do fluxo de processamento de dados do radar de penetração no solo (GPR).}
+\source{\cite{jol2008ground}}
+  \label{fig:fig05}
+\end{figure}
+
+\begin{itemize}
+    \item Instrumento: Equipamentos ou dispositivos usados para coletar dados ou medições;
+    \item Impressão: Gravação de dados que são exibidos ou impressos de alguma forma;
+    \item Exibição/Impressão: Exibir ou imprimir dados, para fins de visualização ou análise;
+    \item Visualização: Ferramentas ou software usados para criar representações visuais de dados, tornando mais fácil compreendê-los e analisá-los;
+    \item Editar: Processo de edição ou modificação de dados, o que pode ser necessário para limpar ou pré-processar os dados;
+    \item Processo Básico: Etapas fundamentais de processamento de dados, como filtragem, redução de ruído ou cálculos simples;
+    \item Processo Avançado: Técnicas de processamento de dados mais complexas que vão além das operações básicas. Pode incluir tarefas como extração de características, reconhecimento de padrões ou análise estatística;
+    \item Processamento de Imagens: Imagem processada, após tratamento básico e avançado, gerando imagem imagem geológica ou não, para uma melhor interpretação dos dados;
+    
+\end{itemize}
+
+\begin{algorithm}[H]
+  \caption{Pseudocódigo da Coletar e Processamento de dados brutos do \ac{gpr}.}
+  \label{alg:pgpr}
+  \SetAlgoLined
+  \begin{algorithmic}[1]
+    \STATE Coletar dados brutos do \ac*{gpr}
+    \STATE Pré-processamento dos dados:
+    \STATE Inicializar uma imagem vazia para armazenar a imagem otimizada.
+    \FOR{$i=1$ até $i=4$ (i)}
+    \STATE Inicializar uma imagem vazia para armazenar a imagem otimizada.
+    \ENDFOR
+    \STATE Pré-processamento:
+    \STATE Realizar filtragem de imagem adicional.
+    \STATE Aplicar técnicas de realce de recursos.
+    \STATE Gerar visualizações finais da imagem otimizada.
+    \STATE Atualize T se houver uma solução melhor
+    \STATE Exibir a imagem otimizada para análise e interpretação.
+    \STATE Salvar a imagem otimizada, se necessário.
+    \STATE \Return{Imagem processada.}
+  \end{algorithmic}
+\end{algorithm}
+
+%1. Coletar dados brutos do GPR.
+
+%2. Pré-processamento dos dados:
+%   a. Aplicar correções de ganho e calibração.
+ %  b. Remover ruído indesejado.
+  % c. Realizar correções de distorção.
+
+%3. Inicializar uma imagem vazia para armazenar a imagem otimizada.
+
+%4. Para cada ponto na grade da imagem:
+ %  a. Definir uma região de interesse (ROI) em torno do ponto.
+  % b. Calcular métricas de qualidade da imagem dentro da ROI, como contraste e nitidez.
+   %c. Ajustar os parâmetros de processamento, como filtro e equalização, com base nas métricas de qualidade.
+   %d. Aplicar os parâmetros de processamento otimizados à ROI.
+   %e. Atualizar a imagem otimizada com os resultados do processamento.
+
+%5. Repetir o passo 4 até que todos os pontos da imagem tenham sido processados.
+
+%6. Pós-processamento opcional:
+ ¨%  a. Realizar filtragem de imagem adicional.
+ %  b. Aplicar técnicas de realce de recursos.
+  % c. Gerar visualizações finais da imagem otimizada.
+
+%7. Exibir a imagem otimizada para análise e interpretação.
+
+%8. Salvar a imagem otimizada, se necessário.
+
+%9. Fim do algoritmo.
+
+Métodos avançados de processamento de dados do \ac*{gpr}, como filtragem espacial e temporal, silenciamento seletivo, filtragem de inclinação, deconvolução e análise de semelhança de velocidade, resultam em dados substancialmente diferentes das informações brutas. Além disso, operações específicas para o \ac*{gpr}, como remoção de fundo e mistura de antenas de múltiplas frequências, são aplicadas.
+
+A evolução do \ac*{gpr} é documentada nos Anais de Conferências de \ac*{gpr} e fornece informações valiosas sobre o desenvolvimento do processamento de dados do \ac*{gpr}. A discussão aqui se concentra em questões essenciais do \ac*{gpr}, que diferem significativamente do processamento sísmico.
+
+\subsection{Dewow}
+\label{subsubsec:dewow}
+
+Processo que é usado para suprimir um efeito chamado "wow" que ocorre nos dados do Radar de Penetração no Solo \ac{gpr} devido à proximidade do receptor com o transmissor. O "wow" é causado pela energia de baixa frequência nos campos próximos ao transmissor, que faz com que o nível base do sinal recebido se curve para cima ou para baixo. O "dewow" envolve a aplicação de um filtro temporal de alto amortecimento para eliminar esse efeito, e pode ser realizado em sistemas analógicos mais antigos ou digitalmente em sistemas modernos.
+
+\subsection{Ganho de Tempo}
+\label{subsubsec:ganhodetempo}
+
+O "ganho de tempo", que é usado para equalizar as amplitudes dos sinais de radar de \ac*{gpr}, uma vez que esses sinais se atenuam rapidamente à medida que se propagam no solo. O ganho de tempo envolve a aplicação de uma função de ganho dependente do tempo para compensar essa rápida queda nos sinais de radar de maiores profundidades. A atenuação no solo pode variar significativamente, portanto, o ganho de tempo é aplicado para acomodar essas variações e permitir a exibição adequada dos dados de \ac*{gpr} versus tempo. O ganho de tempo pode ser aplicado de várias maneiras e deve ser escolhido com base em um modelo físico para minimizar artefatos no processo.
+
+\subsection{Deconvolução}
+\label{subsubsec:deconvolução}
+
+Processo que visa maximizar a largura de banda e reduzir a dispersão de pulsos para aumentar a resolução em dados de \ac*{gpr}. No entanto, geralmente, a deconvolução de dados de \ac*{gpr} não oferece muitos benefícios significativos, pois o pulso padrão do \ac*{gpr} já é o mais curto e comprimido possível para as condições dadas de largura de banda e relação sinal-ruído. A deconvolução pode ser útil em casos de reverberação extrínseca ou reverberação do sistema.
+
+Um tópico relacionado é a filtragem inversa Q, que tenta compensar a rápida atenuação das frequências mais altas em dados de \ac*{gpr} à medida que a profundidade aumenta. Isso é importante para manter a resolução em maiores profundidades. \citeonline{irving2003removal} fornecem uma discussão detalhada sobre a filtragem inversa Q.
+
+\subsection{Migração}
+\label{subsubsec:migração}
+
+
+A migração é uma técnica de deconvolução espacial que visa remover a direcionalidade da fonte e do receptor dos dados de reflexão. Seu objetivo é reconstruir uma representação precisa e geométrica da distribuição de refletividade do subsolo, mas para isso, é necessário ter conhecimento da estrutura de velocidade. A migração é frequentemente um processo interativo, onde a velocidade de fundo é ajustada iterativamente para otimizar a imagem resultante conforme figura \ref{fig:fig06} . Existem várias formas de migração possíveis, e seu uso adequado no \ac*{gpr} visa compensar as características direcionais das antenas. Embora muitos princípios de migração sísmica se apliquem ao \ac*{gpr}, esse método também lida com o desafio único da topografia em relação à profundidade da exploração. A consideração da topografia é discutida por \citeonline{lehmann2000topographic}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig06.png}
+  % Contém Fonte: 
+  \caption{Imagens obtidas com um sistema de 50 MHz que atravessam dois túneis rodoviários, antes e após a migração.}
+\source{\cite{jol2008ground}}
+  \label{fig:fig06}
+\end{figure}
+
+\subsection{Correção topográfica}
+\label{subsubsec:topografica}
+
+Devido à pequena profundidade de exploração do \ac*{gpr}, a compensação da topografia frequentemente é importante. Para variações superficiais menores, o deslocamento temporal das trajetórias de dados pode compensar em grande parte as variações topográficas. O exemplo de perfil de reflexão na figura \ref{fig:fig10}  mostra a estratigrafia e uma reflexão da superfície da água. O perfil começa em uma área plana e sobe uma encosta. Os dados foram compensados por deslocamento temporal em relação à elevação ao longo da linha do perfil, o que torna a reflexão da superfície da água essencialmente plana.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/gpr/fig10.png}
+  % Contém Fonte: 
+  \caption{Ilustração usando o deslocamento temporal dos traços para compensar variações topográficas. Observe que o nível freático é essencialmente plano na seção de radar de penetração no solo \ac{gpr}.}
+\source{\cite{jol2008ground}}
+  \label{fig:fig10}
+\end{figure}

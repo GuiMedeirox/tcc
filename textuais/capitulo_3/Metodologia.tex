@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                              %%
+%%         Capítulo 3 - Metodologia             %%
+%%                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Metodologia}
+\label{cap:metodologia}
+
+A metodologia deste trabalho é estruturada em três fases principais: definição dos cenários de granularidade, execução dos experimentos e análise comparativa dos resultados.
+
+\section{Fase 1: Definição dos Cenários de Granularidade}
+\label{sec:fase1}
+
+A aplicação alvo é a \textit{Online Boutique} \cite{mendonca2024serviceweaver, ghemawat2023serviceweaver}, um \textit{benchmark} de e-commerce composto por 11 componentes portados para Go sobre o \textit{Service Weaver}. A partir dela, serão definidos cenários de granularidade, ou seja, topologias de implantação distintas que variam a co-localização e o desacoplamento dos componentes por meio do arquivo de configuração TOML, sem alteração no código de negócio. Prevê-se, no mínimo:
+\begin{itemize}
+    \item \textbf{Granularidade grossa (monólito modular):} todos os componentes co-localizados em um mesmo processo, maximizando a comunicação local;
+    \item \textbf{Granularidade fina:} todos os componentes desacoplados, cada um executando de forma independente, maximizando a escalabilidade individual;
+    \item \textbf{Granularidades intermediárias:} agrupamentos parciais de componentes, explorando equilíbrios distintos entre co-localização e desacoplamento.
+\end{itemize}
+
+\section{Fase 2: Execução dos Experimentos}
+\label{sec:fase2}
+
+Cada cenário de granularidade será submetido a perfis de carga específicos gerados com a ferramenta \textit{Locust}, variando o número de usuários concorrentes e incluindo picos súbitos de acesso, em ambiente de máquinas virtuais. Durante os experimentos serão coletadas, para cada topologia, as seguintes métricas:
+\begin{itemize}
+    \item Latência média e percentil 95 (p95) das requisições;
+    \item Vazão (\textit{throughput}) em requisições por segundo;
+    \item Número de chamadas remotas (RPC) geradas pela topologia;
+    \item Consumo de recursos (CPU e memória) por componente.
+\end{itemize}
+
+\section{Fase 3: Análise Comparativa Custo-Benefício}
+\label{sec:fase3}
+
+Inspirado na teoria econômica do CBAM \cite{asundi2001cbam}, os resultados de cada cenário serão consolidados em uma função de utilidade custo-benefício, definida por:
+\begin{equation}
+    U(G) = \text{Benefício}(G) - \text{Custo}(G)
+\end{equation}
+onde:
+\begin{itemize}
+    \item $G$: uma topologia de implantação (granularidade) fixa da aplicação;
+    \item $\text{Benefício}(G)$: ganho em vazão e redução de violações de SLA de latência (percentil p95) observados em relação a uma configuração de referência (monólito modular);
+    \item $\text{Custo}(G)$: sobrecarga de comunicação de rede e latência de serialização/RPC geradas pela topologia \cite{mendonca2024serviceweaver}.
+\end{itemize}
+
+A análise comparativa dos valores de $U(G)$ entre os cenários, para cada perfil de carga, permitirá identificar qual granularidade oferece o melhor equilíbrio entre escalabilidade e custo, respondendo aos objetivos propostos.

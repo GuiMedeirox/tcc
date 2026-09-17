@@ -1,0 +1,25 @@
+# Artefatos de build LaTeX
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.loa
+*.lof
+*.log
+*.loq
+*.lot
+*.out
+*.toc
+*.synctex.gz
+*.xdv
+Principal.pdf
+
+# Editores / sistema
+*.txss2
+*.swp
+*~

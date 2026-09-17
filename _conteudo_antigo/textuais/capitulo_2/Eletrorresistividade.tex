@@ -1,0 +1,57 @@
+
+\section{Método da eletrorresistividade}
+\label{subsec:metodo_da_eletrorresistividade}
+
+A \ac{er} é um método geofísico utilizado para determinar a resistividade elétrica dos diferentes tipos de rochas. \cite{braga_metodos_2006}
+
+% Resistividadee
+A resistividade elétrica de um material \ref{fig:fig01} é definida pela sua resistência em ohms. Para um cilindro condutor de resistência $\delta R$, comprimento $\delta L$ e área de seção transversal $\delta A$ (Figura \ref{fig:ro}), a resistividade $\rho$ é dada por:
+\begin{align}
+  \label{eq:resistivity}
+  \rho = \frac{\delta{R}\delta{A}}{\delta{L}}
+\end{align}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/resistividade/ro.png}
+  % Contém Fonte: 
+  \caption{Parâmetros usados na definição de resistividade}
+  \source{\cite{Kearey_introduction_2002}}
+  \label{fig:ro}
+\end{figure}
+
+Diferentes tipos de minerais podem conduzir melhor eletricidade do que outros, assim a medida de resistividade pode ser calculada utilizando a equação \ref{eq:resistivity}. Na figura \ref{fig:res_mat} apresenta os valores dos principais tipos de rochas com suas resistividades.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/resistividade/resistividade.png}
+  \caption{Intervalo aproximado de valores de resistividade de alguns materiais}
+  \source{\cite{de2016geofisica}}
+  \label{fig:res_mat}
+\end{figure}
+
+% Resistividade aparente
+
+% SEV
+A \ac{sev} ou \ac{ves} é utilizado um equipamento para injetar corrente elétrica no solo, a partir de diferentes espaçamentos entre os eletrodos de corrente (A e B) dispostos na superfície do terreno e outros dois eletrodos de potencial (M e N), calcula-se a diferença de potencial entre eles, segundo o arranjo Schlumberger. Na Figura \ref{fig:sev} contém medidas de resistividade ($\rho_n$) e espessuras das camadas ($E_n$) em uma \ac{sev} fictícia. \cite{de2016geofisica}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/resistividade/sev_dados1.jpg}
+  % Contém Fonte: 
+  \caption{Sondagem Elétrica Vertical}
+  \source{Elaboração própria a partir de \cite{de2016geofisica}}
+  \label{fig:sev}
+\end{figure}
+
+
+Quando sua investigação é programada para uma profundidade fixa, as medidas resultam num perfil geoelétrico em uma dimensão (1D) e seus resultados obtidos podem ser expressos por meio de uma curva de resistividade aparente ($\rho_a$) em Ohm metro ($\Omega m$), Figura \ref{fig:curva}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{lib/fig/resistividade/curva.png}
+  \caption{Curva de resistividades aparentes.}
+  % Contém Fonte: 
+  
+  \label{fig:curva}
+\end{figure}

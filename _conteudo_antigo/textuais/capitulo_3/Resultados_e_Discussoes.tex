@@ -1,0 +1,19 @@
+
+
+\chapter{Resultados e Discussões}
+\label{cha:resultados-e-discussoes}
+
+Para investigar o desempenho do \ac{aog}, foram feitos testes em inversões com dados sintéticos e dados reais. Utilizou-se a ferramenta MATLAB nos experimentos.
+
+Obteve-se os dados das sondagens elétricas verticais de Schlumberger dos modelos sintéticos baseados em \citeonline{Sen1993} sendo aplicados 5\% de ruído gaussiano pseudoaleatório em ambos os dados sintéticos, para simular o ruído dos dados observados ao realizar medidas em campo. 
+
+Foram feitas 10 inversões para cada um dos modelos sintéticos. Cada inversão foi realizada pelo \ac{aog} com 1000 iterações e uma população de 100 gafanhotos para o modelo com três camadas e 100 gafanhotos para o modelo de 5 camadas. Com o resultado das inversões, foi obtida a solução média e desvio padrão, gerando diferentes modelos médios.
+
+Já no modelo real, baseia-se em \citeonline{bhattacharya1968direct}, foram feitas 10 inversões com 1000 iterações e uma população de 150 gafanhotos para o modelo real de três camadas. Com o resultado das inversões, foi obtida a solução média e desvio padrão, gerando diferentes modelos médios.
+
+Também serão exibidas figuras que mostram as curvas de convergência da função \textit{fitnnes} das inversões. É importante ressaltar que cada figura mostra um exemplo de uma única inversão dentre as iterações.
+
+\input{textuais/capitulo_3/inversao_3_sintetico.tex}
+\input{textuais/capitulo_3/inversao_5_sintetico.tex}
+\input{textuais/capitulo_3/inversao_3_real.tex}
+
