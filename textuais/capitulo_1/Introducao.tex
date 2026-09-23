@@ -11,7 +11,16 @@
 
 A transição de sistemas monolíticos para arquiteturas de microsserviços --- processo denominado \textit{microservitização} --- tem sido amplamente impulsionada pela necessidade de alinhar decisões técnicas de design com a criação de valor de negócio \cite{hassan2020microservice}. Ao isolar capacidades funcionais em serviços autônomos e desacoplados, busca-se aumentar a escalabilidade, a facilidade de manutenção e a manutenibilidade dos sistemas distribuídos em nuvem \cite{verarivera2021granularity}.
 
-No entanto, definir o tamanho e a dimensão ideal de cada serviço (o problema de granularidade) permanece como um dos maiores desafios em engenharia de software \cite{hassan2020microservice, verarivera2021granularity}. A decomposição excessiva (serviços muito pequenos ou \textit{nanoserviços}) pode introduzir complexidade operacional desnecessária e sobrecarga (\textit{overhead}) de rede, enquanto serviços demasiadamente agregados anulam os benefícios de isolamento e escalabilidade independente \cite{mendonca2024serviceweaver}.
+No entanto, definir o tamanho e a dimensão ideal de cada serviço (o problema de granularidade) permanece como um dos maiores desafios em engenharia de software \cite{hassan2020microservice, verarivera2021granularity}. A decomposição excessiva (serviços muito pequenos ou \textit{nanoserviços}) pode introduzir complexidade operacional desnecessária e sobrecarga (\textit{overhead}) de rede, enquanto serviços demasiadamente agregados anulam os benefícios de isolamento e escalabilidade independente \cite{mendonca2024serviceweaver, rego2025granularity}.
+
+\section{Motivação}
+\label{sec:motivacao}
+
+Decisões de granularidade tomadas no momento do projeto tendem a se perpetuar ao longo da vida do sistema: reorganizar serviços após a implantação --- seja dividindo um serviço sobrecarregado, seja agregando serviços excessivamente fragmentados --- envolve retrabalho significativo, coordenação entre equipes e riscos de migração em produção \cite{hassan2020microservice}. Ainda assim, a escolha é frequentemente realizada sem evidências objetivas, por heurísticas de moda ou intuição, e seus erros se manifestam de forma custosa: sobrecarga de comunicação que degrada o desempenho, ou perda de escalabilidade que exige provisionamento desproporcional de infraestrutura \cite{gan2019deathstarbench, mendonca2024serviceweaver}.
+
+Os estudos empíricos recentes deram passos importantes ao quantificar os efeitos da granularidade sobre o desempenho \cite{mendonca2024serviceweaver} e sobre o desempenho e a resiliência \cite{rego2025granularity}. Contudo, esses efeitos são reportados como atributos de qualidade isolados, sem uma consolidação econômica que indique, para um perfil de carga concreto, qual configuração oferece o melhor equilíbrio entre o que se ganha e o que se paga --- lacuna que motiva diretamente a presente proposta.
+
+Completa essa motivação a viabilidade prática do estudo: o arcabouço \textit{Service Weaver} \cite{ghemawat2023serviceweaver} torna a granularidade uma configuração de implantação, permitindo conduzir experimentos controlados com uma aplicação de referência realista --- a \textit{Online Boutique} --- a um custo computacional e de desenvolvimento acessível a um trabalho de conclusão de curso. O tema interessa, ainda, à formação em Sistemas de Informação, por situar a análise econômica como critério explícito de decisão arquitetural.
 
 \section{Formulação do Problema}
 

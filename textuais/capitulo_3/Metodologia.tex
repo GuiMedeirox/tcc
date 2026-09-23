@@ -12,7 +12,7 @@ A metodologia deste trabalho é estruturada em três fases principais: definiç�
 \section{Fase 1: Definição dos Cenários de Granularidade}
 \label{sec:fase1}
 
-A aplicação alvo é a \textit{Online Boutique} \cite{mendonca2024serviceweaver, ghemawat2023serviceweaver}, um \textit{benchmark} de e-commerce composto por 11 componentes portados para Go sobre o \textit{Service Weaver}. A partir dela, serão definidos cenários de granularidade, ou seja, topologias de implantação distintas que variam a co-localização e o desacoplamento dos componentes por meio do arquivo de configuração TOML, sem alteração no código de negócio. Prevê-se, no mínimo:
+A aplicação alvo é a \textit{Online Boutique} \cite{mendonca2024serviceweaver, ghemawat2023serviceweaver}, um \textit{benchmark} de e-commerce composto por 11 componentes portados para Go sobre o \textit{Service Weaver}. A partir dela, serão definidos cenários de granularidade, ou seja, topologias de implantação distintas que variam a co-localização e o desacoplamento dos componentes por meio do arquivo de configuração TOML, sem alteração no código de negócio \cite{mendonca2024serviceweaver, rego2025granularity}. Prevê-se, no mínimo:
 \begin{itemize}
     \item \textbf{Granularidade grossa (monólito modular):} todos os componentes co-localizados em um mesmo processo, maximizando a comunicação local;
     \item \textbf{Granularidade fina:} todos os componentes desacoplados, cada um executando de forma independente, maximizando a escalabilidade individual;

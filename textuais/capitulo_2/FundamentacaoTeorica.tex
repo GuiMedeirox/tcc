@@ -1,16 +1,87 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                              %%
-%%      Capítulo 2 - Fundamentação Teórica      %%
+%%     Capítulo 2 - Fundamentação Teórica       %%
 %%                                              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Fundamentação Teórica}
 \label{cap:fundamentacao}
 
-[TODO: Revisão da literatura — conceitos e trabalhos relacionados que
-sustentam a proposta.]
+\section{Microsserviços}
+\label{sec:microsservicos}
 
-% Sugestões de seções:
-% \section{Microsserviços}
-% \section{Granularidade de Serviços}
-% \section{Trabalhos Relacionados}
+O estilo arquitetural de microsserviços estrutura uma aplicação como um conjunto de serviços pequenos e autônomos, cada um responsável por uma capacidade funcional bem definida e implantável de forma independente \cite{dragoni2018microservices, verarivera2021granularity}. A transição de sistemas monolíticos para esse estilo --- processo denominado \textit{microservitização} --- tem sido impulsionada pela busca de alinhamento entre decisões técnicas e a criação de valor de negócio, permitindo que equipes desenvolvam, implantem e escalem partes do sistema de maneira independente \cite{hassan2020microservice}.
+
+Os benefícios esperados dessa abordagem incluem escalabilidade independente de cada serviço, tolerância a falhas isoladas e manutenibilidade facilitada por bases de código menores e mais coesas \cite{dragoni2018microservices, verarivera2021granularity}. Contudo, esses benefícios têm um contraponto: um sistema de microsserviços é, essencialmente, um sistema distribuído, com toda a complexidade associada --- comunicação por rede, consistência de dados, latência e sobrecarga operacional \cite{hassan2020microservice, dragoni2018microservices}.
+
+Nesse contexto, uma das decisões de projeto mais impactantes é a de \textbf{quais e quantas responsabilidades cada serviço deve agregar}, decisão conhecida como problema de granularidade \cite{hassan2020microservice, verarivera2021granularity}. É sobre esse conceito que a próxima seção se debruça.
+
+\section{Granularidade de Microsserviços}
+\label{sec:granularidade}
+
+\subsection{Definição e espectro}
+
+Vera-Rivera, Gaona e Astudillo \cite{verarivera2021granularity} definem a granularidade de um microsserviço como o \textbf{grau de agregação de responsabilidades em um serviço}, isto é, quantas capacidades funcionais, dados e operações um único serviço engloba. A granularidade ideal não é uma propriedade fixa: trata-se de uma decisão contingente, dependente das condições de operação do sistema e dos objetivos de negócio \cite{hassan2020microservice}.
+
+A escolha da granularidade desloca-se ao longo de um espectro. No extremo da \textbf{granularidade grossa}, encontram-se serviços que agregam muitas responsabilidades --- cujo limite é o próprio monólito --- reduzindo a sobrecarga de comunicação, mas sacrificando o isolamento e a escalabilidade independente \cite{mendonca2024serviceweaver}. No extremo oposto, a \textbf{granularidade fina} (com o limite dos chamados \textit{nanoserviços}) maximiza a autonomia de cada componente, mas introduz complexidade operacional desnecessária e sobrecarga (\textit{overhead}) de rede decorrente das chamadas remotas \cite{hassan2020microservice, mendonca2024serviceweaver}.
+
+Hassan, Ali e Bahsoon \cite{hassan2017ambients} observam que a granularidade pode ser analisada sob duas perspectivas complementares: a \textbf{lógica}, referente à decomposição de responsabilidades no momento do projeto, e a \textbf{física}, referente à topologia de implantação --- quais serviços executam co-localizados no mesmo processo e quais executam de forma distribuída. É a segunda perspectiva que viabiliza tratá-la como variável experimental: uma mesma aplicação pode ser implantada em diferentes granularidades físicas sem alteração de código, como discutido na Seção~\ref{sec:serviceweaver}.
+
+\subsection{Definição formal adotada}
+
+Para efeitos deste trabalho, adota-se a seguinte formalização. Seja $C = \{c_1, c_2, \ldots, c_n\}$ o conjunto de componentes de uma aplicação. A \textbf{granularidade de implantação} $G$ é um particionamento de $C$ em $k$ grupos disjuntos, em que cada grupo é implantado como um processo independente:
+
+\begin{equation}
+    G = \{g_1, g_2, \ldots, g_k\}, \quad g_i \subseteq C, \quad \bigcup_{i=1}^{k} g_i = C, \quad g_i \cap g_j = \emptyset \ (i \neq j)
+\end{equation}
+
+Nesse modelo, $k = 1$ corresponde ao monólito modular (todos os componentes co-localizados) e $k = n$ corresponde à granularidade máxima (cada componente executando isoladamente), com as granularidades intermediárias explorando agrupamentos parciais. A Tabela~\ref{tab:exemplo-particoes} ilustra esses extremos e um caso intermediário.
+
+\begin{table}[htb]
+    \centering
+    \caption{Exemplos de granularidades de implantação para um sistema com quatro componentes}
+    \label{tab:exemplo-particoes}
+    \begin{tabular}{c c l}
+        \toprule
+        $k$ & Partição $G$ & Caracterização \\
+        \midrule
+        1 & $\{c_1, c_2, c_3, c_4\}$ & Monólito modular: toda comunicação é local \\
+        2 & $\{c_1, c_2\}, \{c_3, c_4\}$ & Granularidade intermediária \\
+        4 & $\{c_1\}, \{c_2\}, \{c_3\}, \{c_4\}$ & Granularidade fina: escalabilidade máxima, mais RPC \\
+        \bottomrule
+    \end{tabular}
+    \source{Elaborada pelo autor.}
+\end{table}
+
+A literatura também propõe \textbf{métricas} para caracterizar a granularidade: Vera-Rivera, Gaona e Astudillo \cite{verarivera2021granularity} sistematizam indicadores baseados em tamanho, coesão e acoplamento, e observam que o tamanho ótimo de um microsserviço afeta diretamente o desempenho, a manutenibilidade e a complexidade das transações distribuídas. Neste trabalho, contudo, a granularidade é caracterizada pela topologia de implantação (a partição $G$), cujos efeitos são medidos empiricamente em execução.
+
+\section{Avaliação Econômica de Arquiteturas de Software}
+\label{sec:avaliacao-economica}
+
+A fundamentação econômica deste trabalho origina-se dos métodos de avaliação arquitetural do Software Engineering Institute (SEI). O ATAM (\textit{Architecture Tradeoff Analysis Method}) estabeleceu a análise sistemática de \textit{tradeoffs} entre atributos de qualidade por meio de cenários \cite{kazman2000atam}. Seu sucessor, o CBAM (\textit{Cost Benefit Analysis Method}), estende essa análise incorporando dimensões econômicas: cada estratégia arquitetural é avaliada quanto ao seu \textbf{retorno} sobre o investimento, ponderando o custo de implementação contra a utilidade agregada aos atributos de qualidade relevantes para as partes interessadas \cite{asundi2001cbam}.
+
+O cerne do CBAM é a noção de \textbf{curva de resposta de utilidade} (\textit{utility-response curve}): para cada atributo de qualidade (por exemplo, latência ou vazão), as partes interessadas expressam como a utilidade do sistema varia à medida que o atributo melhora. Uma estratégia arquitetural cujo benefício em utilidade --- medido sobre essa curva --- supera seu custo de implementação é candidata a adoção, e a relação entre benefício e custo (\textit{Return}) ordena as estratégias por prioridade econômica \cite{asundi2001cbam}.
+
+Aplicado à granularidade, esse raciocínio produz a estrutura de análise adotada neste trabalho: a decisão de implantar o sistema sob uma partição $G$ agrega \textbf{benefício} (ganhos de escalabilidade e atendimento a acordos de nível de serviço) e incorre em \textbf{custo} (sobrecarga de comunicação e consumo de recursos). A diferença fundamental em relação ao uso tradicional do método é a fonte dos dados: em vez de estimativas coletadas em oficinas de projeto, os benefícios e custos de cada $G$ são \textbf{medidos empiricamente} em execução, conforme detalha o Capítulo~\ref{cap:metodologia}.
+
+\section{Service Weaver}
+\label{sec:serviceweaver}
+
+O \textit{Service Weaver} \cite{ghemawat2023serviceweaver} é um arcabouço de código aberto, desenvolvido pelo Google, que propõe uma resolução ao dilema monólito-versus-microsserviços: o desenvolvedor escreve a aplicação como um \textbf{monólito modular} --- componentes Go que se comunicam por chamadas de método --- e a decisão de como esses componentes são distribuídos fisicamente é transferida para o momento da implantação, por meio de um arquivo de configuração. Componentes co-localizados comunicam-se por chamadas locais; componentes desacoplados comunicam-se automaticamente via RPC, sem alteração no código de negócio \cite{ghemawat2023serviceweaver}.
+
+Sob a formalização da Seção~\ref{sec:granularidade}, o \textit{Service Weaver} torna a granularidade de implantação $G$ uma \textbf{configuração de \textit{deployment}}: cada grupo da partição é descrito no arquivo de configuração, e o \textit{deployer} do arcabouço responsável por provisionar e conectar os processos. Essa propriedade é o que permite isolar a granularidade como variável experimental --- a mesma aplicação, o mesmo código e a mesma carga podem ser executados sob diferentes partições, e os efeitos observados são atribuíveis à granularidade.
+
+A viabilidade empírica dessa abordagem já foi demonstrada na literatura. Mendonça Filho e Mendonça \cite{mendonca2024serviceweaver} avaliaram o desempenho de uma aplicação de referência em múltiplas configurações de granularidade e observaram que as decisões de granularidade afetam significativamente o desempenho, especialmente sob cargas de trabalho elevadas. Rêgo, Mendonça Filho e Mendonça \cite{rego2025granularity} estenderam a análise para a dimensão de resiliência, em ambiente de Kubernetes gerenciado, confirmando que tanto o desempenho quanto a resiliência do sistema variam conforme a topologia de implantação adotada.
+
+Vale registrar que o Google encerrou o desenvolvimento ativo do arcabouço em dezembro de 2024 \cite{serviceweaver}. O projeto permanece funcional e sua documentação disponível, e sua adoção neste trabalho justifica-se por um critério metodológico: o \textit{Service Weaver} é, no conhecimento dos autores, o único arcabouço que torna a granularidade de implantação explicitamente controlável como configuração, permitindo o estudo controlado proposto.
+
+\section{Trabalhos Relacionados}
+\label{sec:trabalhos-relacionados}
+
+O problema da granularidade está consolidado na literatura. Hassan, Bahsoon e Kazman \cite{hassan2020microservice} mapearam sistematicamente as pesquisas sobre transição para microsserviços e identificaram a granularidade como um dos desafios centrais da área, notando que a decisão é contingente às condições de operação. Como respostas, propuseram-se meta-modelos para raciocinar sobre granularidade \cite{hassan2017ambients}, revisões que sistematizam definições e métricas \cite{verarivera2021granularity} e abordagens de análise de escalabilidade para orientar o reagrupamento de serviços \cite{hassan2020microservice}.
+
+Evidências independentes do \textit{tradeoff} em si também são consolidadas na literatura: avaliando suítes de referência de microsserviços, Gan et al. \cite{gan2019deathstarbench} demonstraram que a latência de ponta a ponta se degrada à medida que se aumenta o número de serviços em uma cadeia de chamadas, documentando empiricamente o custo de granularidades excessivamente finas.
+
+Mais recentemente, os trabalhos empíricos habilitados pelo \textit{Service Weaver} quantificaram os efeitos da granularidade sobre o desempenho \cite{mendonca2024serviceweaver} e sobre o desempenho e a resiliência \cite{rego2025granularity}, comparando múltiplas topologias de implantação da mesma aplicação sob cargas controladas.
+
+Observa-se, contudo, uma lacuna: os estudos existentes caracterizam os efeitos da granularidade em atributos de qualidade isolados, mas não consolidam esses efeitos em uma \textbf{análise de equilíbrio custo-benefício} que oriente a escolha da granularidade por perfil de carga. É essa lacuna que o presente trabalho aborda, ao integrar a lente econômica do CBAM \cite{asundi2001cbam} à avaliação empírica de granularidades de implantação.

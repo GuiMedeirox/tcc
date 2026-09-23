@@ -7,11 +7,9 @@
 \begin{resumo}
     \noindent
 
-    [TODO: Resumo do trabalho (150 a 500 palavras, conforme ABNT NBR 6028).
-    Apresente o tema, o objetivo, a metodologia, os resultados e a
-    conclusão.]
+    Arquiteturas de microsserviços exigem que o projetista decida o grau de agregação de responsabilidades de cada serviço --- sua granularidade. Trata-se de uma decisão contingente e de alto impacto: granularidade excessivamente fina introduz sobrecarga de comunicação entre serviços, enquanto granularidade excessivamente grossa anula os benefícios de isolamento e escalabilidade independente. Embora estudos recentes tenham quantificado os efeitos da granularidade sobre atributos de qualidade como desempenho e resiliência, não há, na literatura, uma consolidação desses efeitos em uma análise de equilíbrio custo-benefício que oriente a escolha da configuração adequada. Este trabalho propõe avaliar empiricamente a relação custo-benefício de diferentes granularidades de implantação de microsserviços, utilizando o arcabouço \textit{Service Weaver} e a aplicação de referência \textit{Online Boutique}. Serão definidos cenários de granularidade (monólito modular, granularidade fina e configurações intermediárias) por meio da configuração de implantação do arcabouço, submetidos a perfis de carga gerados com a ferramenta \textit{Locust} em ambiente de máquinas virtuais, coletando-se latência (média e percentil 95), vazão, chamadas remotas e consumo de recursos. Os resultados de cada cenário serão consolidados, em relação ao monólito de referência, em uma função de utilidade inspirada no método CBAM. Espera-se demonstrar que o equilíbrio entre escalabilidade e custo varia com o perfil de carga, fornecendo evidências para orientar decisões de granularidade.
 
-    \textbf{Palavras-chave}: microsserviços, granularidade, custo-benefício.
+    \textbf{Palavras-chave}: microsserviços; granularidade; análise custo-benefício; \textit{Service Weaver}; escalabilidade.
 \end{resumo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,7 +21,7 @@
 \begin{resumo}[Abstract]
     \noindent
 
-    [TODO: Versão do resumo em inglês.]
+    Microservice architectures require designers to decide how many responsibilities each service aggregates --- its granularity. This is a contingent, high-impact decision: excessively fine granularity introduces inter-service communication overhead, whereas excessively coarse granularity forfeits the benefits of isolation and independent scalability. Although recent studies have quantified the effects of granularity on quality attributes such as performance and resilience, the literature lacks a consolidation of these effects into a cost-benefit equilibrium analysis to guide the choice of an adequate configuration. This work proposes an empirical evaluation of the cost-benefit ratio of different microservice deployment granularities, using the \textit{Service Weaver} framework and the \textit{Online Boutique} reference application. Granularity scenarios (modular monolith, fine granularity, and intermediate configurations) will be defined through the framework's deployment configuration, submitted to workload profiles generated with the \textit{Locust} tool on virtual machine environments, collecting latency (mean and 95th percentile), throughput, remote calls, and resource consumption. The results of each scenario will be consolidated, relative to the reference monolith, into a utility function inspired by the CBAM method. The expected outcome is to demonstrate that the equilibrium between scalability and cost varies with the workload profile, providing evidence to guide granularity decisions.
 
-    \textbf{Keywords}: microservices, granularity, cost-benefit.
+    \textbf{Keywords}: microservices; granularity; cost-benefit analysis; \textit{Service Weaver}; scalability.
 \end{resumo}
