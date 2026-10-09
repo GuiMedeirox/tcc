@@ -1,0 +1,95 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       Fundamentação Teórica       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Fundamentação]{Fundamentação Teórica}
+\label{sec:fundamentacao-teorica}
+
+\subsection{Granularidade de Microsserviços}
+\label{subsec:granularidade}
+
+\begin{frame}{Granularidade de implantação}
+    \begin{block}{Definição formal adotada}
+        \small Seja $C = \{c_1, c_2, \ldots, c_n\}$ o conjunto de componentes de uma aplicação. A \textbf{granularidade de implantação} $G$ é um particionamento de $C$ em $k$ grupos disjuntos, cada um implantado como um processo independente:
+        \[
+            G = \{g_1, g_2, \ldots, g_k\}, \quad g_i \subseteq C, \quad \textstyle\bigcup_{i=1}^{k} g_i = C, \quad g_i \cap g_j = \emptyset \ (i \neq j)
+        \]
+    \end{block}
+    \begin{itemize}
+        \item $k = 1$: monólito modular \qquad $k = n$: granularidade máxima \qquad $1 < k < n$: intermediárias.
+        \item Perspectivas complementares \cite{hassan2017ambients}: \textbf{lógica} (decomposição no design) e \textbf{física} (topologia de implantação).
+        \item É a perspectiva \textbf{física} que torna a granularidade uma variável experimental \cite{verarivera2021granularity}.
+    \end{itemize}
+\end{frame}
+
+\subsection{Service Weaver}
+\label{subsec:serviceweaver}
+
+\begin{frame}{Service Weaver: granularidade como configuração}
+    \begin{center}
+    \begin{tikzpicture}[
+        st/.style={rectangle, draw, rounded corners=2pt, align=center, font=\scriptsize, minimum height=9mm, inner sep=2.5pt},
+        ar/.style={-{Latex[length=2.2mm]}, thick, Blueframe}]
+        \node[st, fill=Lightgreenframe, text width=2.55cm] (code) {código único\\\textbf{monólito modular}\\(componentes Go)};
+        \node[st, right=3.5mm of code, fill=Lightblueframe, text width=1.9cm] (bin) {compilação\\binário único};
+        \node[st, right=3.5mm of bin, fill=Lightyellowframe, text width=2.15cm] (toml) {configuração TOML\\partição $G$};
+        \node[st, right=3.5mm of toml, fill=Lightorangeframe, text width=2.3cm] (dep) {topologia de\\implantação\\($k$ processos)};
+        \draw[ar] (code) -- (bin);
+        \draw[ar] (bin) -- (toml);
+        \draw[ar] (toml) -- (dep);
+    \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item Framework de código aberto do Google \cite{ghemawat2023serviceweaver}: co-localizados comunicam-se por chamadas locais; desacoplados, automaticamente via RPC --- \textbf{sem alteração no código de negócio}.
+        \item Mesma aplicação, mesmo código e mesma carga sob partições $G$ diferentes $\Rightarrow$ efeitos observados \textbf{atribuíveis à granularidade}.
+        \item Viabilidade já demonstrada empiricamente \cite{mendonca2024serviceweaver, rego2025granularity}.
+    \end{itemize}
+\end{frame}
+
+\subsection{Avaliação Econômica de Arquiteturas}
+\label{subsec:cbam}
+
+\begin{frame}{Avaliação econômica: do ATAM ao CBAM}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \begin{itemize}
+                \item \textbf{ATAM} \cite{kazman2000atam}: análise sistemática de \textit{tradeoffs} entre atributos de qualidade.
+                \item \textbf{CBAM} \cite{asundi2001cbam}: incorpora dimensões econômicas --- retorno sobre o investimento ponderado pela \textbf{utilidade} para as partes interessadas.
+                \item Aplicado à granularidade: benefícios e custos de cada $G$ \textbf{medidos em execução}, não estimados.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+            \begin{tikzpicture}[scale=0.72, font=\scriptsize]
+                \draw[-{Latex[length=2mm]}] (0,0) -- (4.6,0) node[below, align=center]{atributo de qualidade\\(ex.: latência p95)};
+                \draw[-{Latex[length=2mm]}] (0,0) -- (0,3.0) node[left, rotate=90, anchor=south]{utilidade};
+                \draw[very thick, Blueframe] (0.3,0.35) .. controls (1.8,0.7) and (2.6,1.9) .. (4.3,2.7);
+                \node[Blueframe!50!black, align=left, anchor=west] at (0.35,1.9) {curva de resposta\\de utilidade};
+                \fill[Orangeframe!80!black] (1.5,0.68) circle (1.6pt) node[below=1pt, font=\tiny]{cenário A};
+                \fill[Greenframe!80!black] (3.3,2.25) circle (1.6pt) node[below right=0.5pt, font=\tiny]{cenário B};
+            \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Trabalhos Relacionados}
+\label{subsec:relacionados}
+
+\begin{frame}{Trabalhos relacionados}
+    \begin{center}
+    \small
+    \begin{tabular}{p{3.6cm} p{3.3cm} p{3.1cm}}
+        \textbf{Trabalho} & \textbf{Avalia} & \textbf{Contexto} \\
+        \hline
+        Mendonça Filho e Mendonça (2024) & desempenho $\times$ granularidade & Service Weaver \\
+        Rêgo et al. (2025) & desempenho e resiliência & Service Weaver + Amazon EKS \\
+        Gan et al. (2019) & degradação em cadeias de chamadas & DeathStarBench \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \begin{alertblock}{Lacuna}
+        \small Os efeitos são reportados como atributos de qualidade \textbf{isolados} --- não há consolidação em uma \textbf{análise de equilíbrio custo-benefício} que oriente a escolha da granularidade por perfil de carga.
+    \end{alertblock}
+\end{frame}

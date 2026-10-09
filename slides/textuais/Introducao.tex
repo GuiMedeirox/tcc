@@ -1,0 +1,115 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%            Introdução            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Introdução]{Introdução}
+\label{sec:introducao}
+
+\subsection{Contexto e Motivação}
+\label{subsec:contexto}
+
+\begin{frame}{Contexto: a transição para microsserviços}
+    \begin{itemize}
+        \item \emph{Microservitização}: alinhar decisões técnicas de design à criação de valor de negócio \cite{hassan2020microservice}.
+        \item Todo sistema de microsserviços é, essencialmente, um sistema distribuído \cite{dragoni2018microservices}.
+    \end{itemize}
+    \vfill
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Benefícios esperados}
+                \small Escalabilidade independente, tolerância a falhas isoladas, bases de código menores e coesas.
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Complexidade associada}
+                \small Comunicação por rede, consistência de dados, latência e sobrecarga operacional.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{O problema da granularidade}
+    \begin{itemize}
+        \item \emph{Quais e quantas responsabilidades cada serviço deve agregar?} Um dos desafios centrais da área \cite{hassan2020microservice, verarivera2021granularity}.
+        \item Decisão \textbf{contingente}: a escolha ideal depende das condições de operação do sistema \cite{hassan2020microservice}.
+    \end{itemize}
+    \begin{center}
+    \begin{tikzpicture}[
+        comp/.style={rectangle, draw=Blueframe!70!black, fill=Lightblueframe, minimum size=3.4mm, inner sep=0pt},
+        grp/.style={rectangle, draw=Orangeframe!70!black, thick, rounded corners=1.5pt},
+        plbl/.style={font=\scriptsize, align=center}]
+        % --- k = 1: monólito modular
+        \begin{scope}[shift={(0,0)}]
+            \node[grp, minimum width=21.5mm, minimum height=10mm] at (0.825,0.25) {};
+            \foreach \x in {0,0.55,1.1,1.65} \foreach \y in {0,0.55}
+                \node[comp] at (\x,\y) {};
+            \node[plbl] at (0.825,-0.72) {$k=1$\\monólito modular};
+        \end{scope}
+        % --- k = 2: intermediária
+        \begin{scope}[shift={(3.1,0)}]
+            \node[grp, minimum width=9.6mm, minimum height=10mm] at (0.275,0.25) {};
+            \node[grp, minimum width=9.6mm, minimum height=10mm] at (1.375,0.25) {};
+            \foreach \x in {0,0.55,1.1,1.65} \foreach \y in {0,0.55}
+                \node[comp] at (\x,\y) {};
+            \node[plbl] at (0.825,-0.72) {$k=2$\\granularidade intermediária};
+        \end{scope}
+        % --- k = 4: fina
+        \begin{scope}[shift={(6.2,0)}]
+            \foreach \x in {0,0.55,1.1,1.65}
+                \node[grp, minimum width=5.4mm, minimum height=10mm] at (\x,0.25) {};
+            \foreach \x in {0,0.55,1.1,1.65} \foreach \y in {0,0.55}
+                \node[comp] at (\x,\y) {};
+            \node[plbl] at (0.825,-0.72) {$k=n$\\granularidade fina};
+        \end{scope}
+        % --- espectro
+        \draw[-{Latex[length=2.5mm]}, very thick, Grayframe] (0,-1.75) -- (8.0,-1.75)
+            node[pos=0.03, above=1.5pt, anchor=south west, font=\scriptsize]{mais comunicação local}
+            node[pos=0.97, above=1.5pt, anchor=south east, font=\scriptsize, align=right]{mais chamadas remotas (RPC)};
+        \node[font=\scriptsize, Grayframe] at (4.0,-2.15) {granularidade grossa \quad$\longleftrightarrow$\quad granularidade fina};
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\subsection{Formulação do Problema}
+\label{subsec:formulacao}
+
+\begin{frame}{Formulação do Problema}
+    \begin{itemize}
+        \item Métodos como o CBAM \cite{asundi2001cbam} atuam de forma estática, na fase de design; a granularidade ideal \textbf{não é uma propriedade fixa} \cite{hassan2020microservice, hassan2017ambients}.
+    \end{itemize}
+    \vfill
+    \begin{exampleblock}{Benefício --- valor agregado}
+        \small Ganhos de escalabilidade e atendimento a SLAs obtidos ao desacoplar componentes.
+    \end{exampleblock}
+    \begin{alertblock}{Custo incorrido}
+        \small Sobrecarga de comunicação entre processos e máquinas virtuais.
+    \end{alertblock}
+    \begin{block}{Lacuna}
+        \small Faltam evidências empíricas que quantifiquem, para cenários de carga específicos, o \textbf{equilíbrio} entre as duas dimensões \cite{hassan2020microservice}.
+    \end{block}
+\end{frame}
+
+\subsection{Objetivos}
+\label{subsec:objetivos}
+
+\begin{frame}{Objetivo Geral}
+    \vfill
+    \begin{block}{}\centering
+        Avaliar empiricamente a relação custo-benefício de diferentes granularidades de implantação de microsserviços, utilizando o \textit{Service Weaver} e a \textit{Online Boutique} sob cenários específicos de carga.
+    \end{block}
+    \vfill
+    \begin{itemize}
+        \item Objeto: a \textbf{mesma aplicação} implantada em topologias físicas diferentes.
+        \item Critério de decisão: o \textbf{equilíbrio entre escalabilidade e custo} por perfil de carga.
+    \end{itemize}
+    \vfill
+\end{frame}
+
+\begin{frame}{Objetivos Específicos}
+    \begin{enumerate}
+        \item \textbf{Definir} cenários de granularidade (topologias de implantação) para a \textit{Online Boutique} \cite{mendonca2024serviceweaver, rego2025granularity} --- a mesma aplicação de referência dos estudos que fundamentam este trabalho ---, variando a co-localização de componentes via TOML.
+        \item \textbf{Executar} experimentos controlados com o \textit{Locust}: usuários concorrentes e picos súbitos de acesso sobre cada cenário.
+        \item \textbf{Analisar} as métricas coletadas (latência média e p95, vazão, chamadas remotas) e identificar a granularidade de melhor equilíbrio em cada perfil de carga.
+    \end{enumerate}
+\end{frame}

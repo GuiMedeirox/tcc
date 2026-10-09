@@ -1,0 +1,122 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%            Metodologia            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Metodologia}
+\label{sec:metodologia}
+
+\begin{frame}{Visão geral: três fases}
+    \begin{center}
+    \begin{tikzpicture}[
+        fase/.style={rectangle, draw=Blueframe!70!black, fill=Lightblueframe, rounded corners=2.5pt, align=center, font=\scriptsize, text width=3.35cm, minimum height=17mm},
+        ar/.style={-{Latex[length=3mm]}, very thick, Blueframe}]
+        \node[fase] (f1) {\textbf{Fase 1}\\[1mm]Definição dos cenários de granularidade (topologias $G$ no TOML)};
+        \node[fase, right=7mm of f1] (f2) {\textbf{Fase 2}\\[1mm]Execução dos experimentos de carga (\textit{Locust} em VMs)};
+        \node[fase, right=7mm of f2] (f3) {\textbf{Fase 3}\\[1mm]Análise comparativa custo-benefício ($U(G)$ por perfil)};
+        \draw[ar] (f1) -- (f2);
+        \draw[ar] (f2) -- (f3);
+    \end{tikzpicture}
+    \end{center}
+    \vfill
+    \begin{itemize}
+        \item Aplicação alvo: \textit{Online Boutique} --- \textit{benchmark} de e-commerce com \textbf{11 componentes} portados para Go sobre o \textit{Service Weaver} \cite{mendonca2024serviceweaver, ghemawat2023serviceweaver}.
+        \item Variável independente: a \textbf{partição} $G$; variáveis dependentes: desempenho e consumo de recursos.
+    \end{itemize}
+\end{frame}
+
+\subsection{Fase 1: Cenários de Granularidade}
+\label{subsec:fase1}
+
+\begin{frame}{Fase 1 --- Cenários de granularidade (no mínimo)}
+    \begin{center}
+    \begin{tikzpicture}[
+        comp/.style={rectangle, draw=Blueframe!70!black, fill=Lightblueframe, minimum width=4.6mm, minimum height=4.6mm, inner sep=0pt, font=\tiny},
+        compf/.style={comp, draw=Orangeframe!70!black, fill=Lightorangeframe},
+        grp/.style={rectangle, draw=Orangeframe!70!black, thick, rounded corners=1.5pt},
+        rlbl/.style={font=\scriptsize, anchor=west, align=left}]
+        % --- Cenário A: k = 1
+        \node[rlbl] at (-3.9,0.0) {\textbf{A} --- $k{=}1$\\monólito modular};
+        \foreach \i in {1,...,11} \node[comp] (a\i) at ({(\i-1)*0.66},0) {c\i};
+        \draw[grp] ($(a1.north west)+(-0.09,0.09)$) rectangle ($(a11.south east)+(0.09,-0.09)$);
+        % --- Cenário B: k = 3 (exemplo de configuração intermediária)
+        \node[rlbl] at (-3.9,-1.15) {\textbf{B} --- $k{=}3$\\intermediária (ex.)};
+        \foreach \i in {1,...,11} \node[comp] (b\i) at ({(\i-1)*0.66},-1.15) {c\i};
+        \draw[grp] ($(b1.north west)+(-0.09,0.09)$) rectangle ($(b6.south east)+(0.09,-0.09)$);
+        \draw[grp] ($(b7.north west)+(-0.09,0.09)$) rectangle ($(b9.south east)+(0.09,-0.09)$);
+        \draw[grp] ($(b10.north west)+(-0.09,0.09)$) rectangle ($(b11.south east)+(0.09,-0.09)$);
+        % --- Cenário C: k = 11
+        \node[rlbl] at (-3.9,-2.3) {\textbf{C} --- $k{=}11$\\granularidade fina};
+        \foreach \i in {1,...,11} \node[compf] (c\i) at ({(\i-1)*0.66},-2.3) {c\i};
+        % --- nota
+        \node[font=\tiny, anchor=north, align=center] at (3.3,-3.0)
+            {$C = \{c_1, \ldots, c_{11}\}$: componentes da \textit{Online Boutique};\\ a comunicação entre grupos é feita automaticamente via RPC.};
+    \end{tikzpicture}
+    \end{center}
+    \vfill
+    \begin{itemize}
+        \item Cenários definidos \textbf{apenas pelo arquivo de configuração}, sem alteração no código de negócio \cite{mendonca2024serviceweaver}.
+    \end{itemize}
+\end{frame}
+
+\subsection{Fase 2: Execução dos Experimentos}
+\label{subsec:fase2}
+
+\begin{frame}{Fase 2 --- Execução dos experimentos}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Geração de carga}
+                \small
+                \begin{itemize}
+                    \item \textit{Locust}: usuários concorrentes variando no tempo;
+                    \item perfil com \textbf{picos súbitos} de acesso;
+                    \item ambiente de \textbf{máquinas virtuais}.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Métricas coletadas por topologia}
+                \small
+                \begin{itemize}
+                    \item latência média e percentil 95 (p95);
+                    \item vazão (requisições/s);
+                    \item número de chamadas remotas (RPC);
+                    \item CPU e memória por componente.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vfill
+    \begin{center}
+    \begin{tikzpicture}[font=\scriptsize, node distance=2.5mm,
+        st/.style={rectangle, draw, rounded corners=2pt, align=center, minimum height=7mm, font=\scriptsize},
+        ar/.style={-{Latex[length=2mm]}, thick, Grayframe}]
+        \node[st, fill=Lightgreenframe] (loc) {\textit{Locust}};
+        \node[st, right=of loc, fill=Lightblueframe] (app) {aplicação sob a topologia $G$};
+        \node[st, right=of app, fill=Lightyellowframe] (met) {métricas de execução};
+        \draw[ar] (loc) -- (app);
+        \draw[ar] (app) -- (met);
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\subsection{Fase 3: Análise Custo-Benefício}
+\label{subsec:fase3}
+
+\begin{frame}{Fase 3 --- Análise comparativa custo-benefício}
+    \begin{block}{Função de utilidade (inspirada no CBAM \cite{asundi2001cbam})}
+        \centering
+        $U(G) \;=\; \text{Benefício}(G) \;-\; \text{Custo}(G)$
+    \end{block}
+    \vfill
+    \begin{exampleblock}{Benefício($G$)}
+        \small ganho de vazão e redução de violações de SLA de latência (p95) \textbf{em relação ao monólito modular} (referência).
+    \end{exampleblock}
+    \begin{alertblock}{Custo($G$)}
+        \small sobrecarga de comunicação de rede e latência de serialização/RPC geradas pela topologia \cite{mendonca2024serviceweaver}.
+    \end{alertblock}
+    \vfill
+    \begin{itemize}
+        \item Comparação dos valores de $U(G)$ entre cenários, \textbf{para cada perfil de carga} $\Rightarrow$ qual granularidade oferece o melhor equilíbrio entre escalabilidade e custo.
+    \end{itemize}
+\end{frame}

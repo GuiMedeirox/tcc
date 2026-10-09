@@ -15,9 +15,14 @@
 *.lot
 *.out
 *.toc
+*.nav
+*.snm
+*.vrb
 *.synctex.gz
 *.xdv
 Principal.pdf
+slides/Main.pdf
+slides/render/
 
 # Editores / sistema
 *.txss2

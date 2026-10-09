@@ -1,0 +1,57 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Status e Resultados Esperados  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Status]{Status e Resultados Esperados}
+\label{sec:resultados}
+
+\subsection{Status do Trabalho}
+\label{subsec:status}
+
+\begin{frame}{Status do trabalho}
+    \begin{itemize}
+        \item[$\checkmark$] Proposta de TCC I redigida: introdução, fundamentação teórica e metodologia.
+        \item[$\checkmark$] Ambiente experimental preparado (\textbf{WSL2 Ubuntu}): \textit{Online Boutique} executando sobre o \textit{Service Weaver}.
+        \item[$\checkmark$] Revisão da literatura consolidada (11 referências com DOI).
+        \item[{\textperiodcentered}] Definição final dos cenários de granularidade (em andamento).
+        \item[{\textperiodcentered}] Execução dos experimentos e coleta de métricas (novembro).
+    \end{itemize}
+\end{frame}
+
+\subsection{Resultados Esperados}
+\label{subsec:resultados-esperados}
+
+\begin{frame}{Resultados esperados}
+    \begin{itemize}
+        \item Consolidar $U(G)$ para cada cenário $\times$ perfil de carga.
+        \item \textbf{Hipótese}: o equilíbrio entre escalabilidade e custo \textbf{varia com o perfil de carga}.
+        \item Evidências para orientar decisões de granularidade.
+    \end{itemize}
+    \begin{center}
+    \begin{tikzpicture}[font=\scriptsize, scale=0.8]
+        % eixos
+        \draw[-{Latex[length=2mm]}] (0,0) -- (5.0,0) node[below left=1pt]{cenários};
+        \draw[-{Latex[length=2mm]}] (0,0) -- (0,2.9) node[left, rotate=90, anchor=south]{utilidade $U(G)$};
+        % barras: carga moderada (azul)
+        \fill[Lightblueframe, draw=Blueframe!70!black] (0.62,0)   rectangle (0.98,1.2);
+        \fill[Lightblueframe, draw=Blueframe!70!black] (1.82,0)   rectangle (2.18,1.9);
+        \fill[Lightblueframe, draw=Blueframe!70!black] (3.02,0)   rectangle (3.38,1.5);
+        % barras: pico (laranja)
+        \fill[Lightorangeframe, draw=Orangeframe!70!black] (1.02,0) rectangle (1.38,0.7);
+        \fill[Lightorangeframe, draw=Orangeframe!70!black] (2.22,0) rectangle (2.58,1.4);
+        \fill[Lightorangeframe, draw=Orangeframe!70!black] (3.42,0) rectangle (3.78,2.1);
+        % rótulos dos cenários
+        \node at (1.0,-0.28) {A};
+        \node at (2.2,-0.28) {B};
+        \node at (3.4,-0.28) {C};
+        % legenda
+        \fill[Lightblueframe, draw=Blueframe!70!black]   (4.35,2.30) rectangle +(0.26,0.26);
+        \node[anchor=west, font=\tiny] at (4.68,2.43) {carga moderada};
+        \fill[Lightorangeframe, draw=Orangeframe!70!black] (4.35,1.90) rectangle +(0.26,0.26);
+        \node[anchor=west, font=\tiny] at (4.68,2.03) {pico de acesso};
+    \end{tikzpicture}
+    \end{center}
+    \vspace{-2mm}
+    \centering\scriptsize Ilustração do formato esperado dos resultados (valores fictícios). Cenários: A = monólito, B = intermediária, C = fina.
+\end{frame}
